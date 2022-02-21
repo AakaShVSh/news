@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/main.css">
+  </head>
+
+  <body>
+    <!--DO NOT CHANGE THIS ID's-->
+
+    <div id="container">
+      <div id="sidebar">
+        <!--add your sidebar component here-->
+      </div>
+
+      <div id="main">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Show the clicked article in detailed format here ONLY-->
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type = "module">
+     
+  import sidebar from "./components/sidebar.js";
+
+  let bar = document.querySelector("#sidebar");
+  bar.innerHTML = sidebar()
+
+  import { apiCall, appendArticles } from "./scripts/main.js";
+
+  let url = `https://shrouded-earth-23381.herokuapp.com/api/headlines/india`;
+  let a = await apiCall(url);
+
+ 
+  
+let getdata = (data) => {
+
+  data.forEach(element => {
+
+let div = document.createElement("div");
+    div.id = "box_art";
+    
+
+    let img = document.createElement("img");
+    img.src = element.urlToImage;
+
+    let h2 = document.createElement("h2");
+    h2.innerHTML = element.title;
+
+    let des = document.createElement("p");
+    des.innerHTML = element.description;
+
+    let p = document.createElement("p");
+    p.innerHTML = "Content : "+element.content;
+
+    let pub = document.createElement("p");
+
+    pub.innerHTML = element.publishedAt;
+
+    div.append(img,h2,des,p,pub)
+
+    document.getElementById("main").append(div)
+});
+
+}
+let data = JSON.parse(localStorage.getItem("article"));
+  getdata(data);
+
+</script>
+
+<!-- // :
+// author: null
+// content: "Life Insurance Corporation of India's initial public offering (IPO) is expected to file its Draft Red Herring Prospectus (DRHP) on February 11, sources told CNBC-TV18.\r\nIt has learned that the Insura… [+914 chars]"
+// description: "LIC IPO: The quantum of divestment and EV numbers will be mentioned in the DRHP."
+// publishedAt: "2022-02-11T01:27:00Z"
+// source:
+// id: null
+// name: "Moneycontrol"
+// [[Prototype]]: Object
+// title: "LIC Public Issue | Filing with SEBI likely today, IRDAI clears draft papers - Moneycontrol.com"
+// url: "https://www.moneycontrol.com/news/business/ipo/lic-ipo-filing-with-sebi-likely-on-february-11-irdai-clears-draft-papers-8070891.html"
+// urlToImage: "https://images.moneycontrol.com/static-mcnews/2022/02/LIC-BUilding-770x433.jpg" -->
